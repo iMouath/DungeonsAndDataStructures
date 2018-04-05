@@ -27,5 +27,8 @@ public class MainActivity extends AppCompatActivity {
         s120.takeExit("north");
         s120.takeExit("west");
         csHallway.takeExit("south");
+        s120.display();
+        s120_csHallway.takeExit(p);
+        s120.display();
     }
 }

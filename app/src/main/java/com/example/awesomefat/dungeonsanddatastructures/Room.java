@@ -99,4 +99,15 @@ public class Room
         Object[] params = {n};
         this.npcs_PerformAction("removeNPC", params);
     }
+
+    public void display(){
+        System.out.println("Room Name: " + name);
+        System.out.println("Players in this room: " + players);
+        System.out.println("NPCs in this room: " + npcs);
+        System.out.println("Possible Exists: " + exits);
+    }
+
+    public String getName() {
+        return name;
+    }
 }

@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DungeonsAndDataStructures.iml" filepath="$PROJECT_DIR$/DungeonsAndDataStructures.iml" />
+      <module fileurl="file://C:\Users\Mouath\StudioProjects\DungeonsAndDataStructures\DungeonsAndDataStructures.iml" filepath="C:\Users\Mouath\StudioProjects\DungeonsAndDataStructures\DungeonsAndDataStructures.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\Mouath\StudioProjects\DungeonsAndDataStructures\app\app.iml" filepath="C:\Users\Mouath\StudioProjects\DungeonsAndDataStructures\app\app.iml" />
     </modules>
   </component>
 </project>

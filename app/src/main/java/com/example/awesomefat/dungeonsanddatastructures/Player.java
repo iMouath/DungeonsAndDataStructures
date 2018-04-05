@@ -26,4 +26,9 @@ public class Player
     public void setCurrentRoom(Room currentRoom) {
         this.currentRoom = currentRoom;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
