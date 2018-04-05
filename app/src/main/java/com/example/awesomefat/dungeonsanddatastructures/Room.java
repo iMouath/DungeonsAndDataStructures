@@ -13,7 +13,7 @@ public class Room
 {
     private LinkedList<Player> players;
     private LinkedList<NPC> npcs;
-    private Dictionary<String, Exit> exits;
+    private Hashtable<String, Exit> exits;
     private String description;
     private String name;
 
@@ -26,6 +26,39 @@ public class Room
         this.exits = new Hashtable<String, Exit>();
     }
 
+    public void display()
+    {
+        System.out.println("Room Name: " + this.name);
+        System.out.println("Description\n" + this.description);
+        System.out.println("Also Here:");
+        System.out.println("Players");
+        for(Player p : this.players)
+        {
+            p.display();
+        }
+
+        System.out.println("NPCs");
+        for(NPC n : this.npcs)
+        {
+            n.display();
+        }
+
+        System.out.println("Obvious Exits:");
+        /*
+        Enumeration<String> keys = this.exits.keys();
+        while(keys.hasMoreElements())
+        {
+            System.out.println(keys.nextElement());
+        }
+        */
+
+        System.out.println("Obvious Exits:");
+        for(String keyName : this.exits.keySet())
+        {
+            System.out.println(keyName);
+        }
+    }
+
     //Exit Management
     synchronized  public void addExit(String direction, Exit e)
     {
@@ -34,8 +67,15 @@ public class Room
 
     public boolean takeExit(String direction)
     {
-        System.out.println(this.exits.get(direction));
-        return true;
+        Exit temp = this.exits.get(direction);
+        if(temp != null)
+        {
+            return temp.takeExit(this.players.getFirst());
+        }
+        else
+        {
+            return false;
+        }
     }
 
     //Player management
