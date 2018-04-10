@@ -26,6 +26,26 @@ public class Room
         this.exits = new Hashtable<String, Exit>();
     }
 
+    public LinkedList<Player> getPlayers() {
+        return players;
+    }
+
+    public LinkedList<NPC> getNpcs() {
+        return npcs;
+    }
+
+    public Hashtable<String, Exit> getExits() {
+        return exits;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     public void display()
     {
         System.out.println("Room Name: " + this.name);
