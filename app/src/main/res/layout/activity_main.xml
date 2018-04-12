@@ -89,6 +89,7 @@
                 android:id="@+id/northButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="onExitButtonClick"
                 android:text="North" />
 
             <LinearLayout
@@ -106,6 +107,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:onClick="onExitButtonClick"
                     android:text="West" />
 
                 <Space
@@ -118,6 +120,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:onClick="onExitButtonClick"
                     android:text="East" />
 
                 <Space
@@ -131,6 +134,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:onClick="onExitButtonClick"
                 android:text="South" />
         </LinearLayout>
     </LinearLayout>
