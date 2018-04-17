@@ -6,6 +6,8 @@ package com.example.awesomefat.dungeonsanddatastructures;
 
 public class NPC extends Character
 {
+    public NPC(){}
+
     public NPC(String name)
     {
         super(name);
