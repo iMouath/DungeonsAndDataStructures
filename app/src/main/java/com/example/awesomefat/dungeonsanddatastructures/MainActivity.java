@@ -131,26 +131,26 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void onExitButtonClick(View view){
-        if(view == northButton){
-            //North Exit
-            p.currentRoom.takeExit("north");
-            fillInterface(p.currentRoom);
-        }
-        if(view == southButton){
-            //South Exit
-            p.currentRoom.takeExit("south");
-            fillInterface(p.currentRoom);
-        }
-        if(view == eastButton){
-            //East Exit
-            p.currentRoom.takeExit("east");
-            fillInterface(p.currentRoom);
-        }
-        if(view == westButton){
-            //West Exit
-            p.currentRoom.takeExit("west");
-            fillInterface(p.currentRoom);
-        }
+//        if(view == northButton){
+//            //North Exit
+//            p.currentRoom.takeExit("north");
+//            fillInterface(p.currentRoom);
+//        }
+//        if(view == southButton){
+//            //South Exit
+//            p.currentRoom.takeExit("south");
+//            fillInterface(p.currentRoom);
+//        }
+//        if(view == eastButton){
+//            //East Exit
+//            p.currentRoom.takeExit("east");
+//            fillInterface(p.currentRoom);
+//        }
+//        if(view == westButton){
+//            //West Exit
+//            p.currentRoom.takeExit("west");
+//            fillInterface(p.currentRoom);
+//        }
 
     }
 }
