@@ -1,10 +1,7 @@
 package com.example.awesomefat.dungeonsanddatastructures;
 
-import java.util.Dictionary;
-import java.util.Enumeration;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.LinkedList;
 import java.util.Map;
 
 /**
@@ -13,8 +10,8 @@ import java.util.Map;
 
 public class Room
 {
-    //public LinkedList<Player> players;
-    //public LinkedList<NPC> npcs;
+    public ArrayList<Player> players;
+    public ArrayList<NPC> npcs;
     public Map<String, Exit> exits;
     public String description;
     public String name;
@@ -25,23 +22,23 @@ public class Room
     {
         this.name = name;
         this.description = description;
-        //this.players = new LinkedList<Player>();
-        //this.npcs = new LinkedList<NPC>();
+        this.players = new ArrayList<Player>();
+        this.npcs = new ArrayList<NPC>();
         this.exits = new HashMap<String, Exit>();
     }
 
-//
-//    public LinkedList<Player> getPlayers() {
-//        return players;
-//    }
-//
-//    public LinkedList<NPC> getNpcs() {
-//        return npcs;
-//    }
-//
-//    public Hashtable<String, Exit> getExits() {
-//        return exits;
-//    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public ArrayList<NPC> getNpcs() {
+        return npcs;
+    }
+
+    public Map<String, Exit> getExits() {
+        return exits;
+    }
 
     public String getDescription() {
         return description;
@@ -57,18 +54,14 @@ public class Room
         this.exits.put(direction, e);
     }
 
-//    public boolean takeExit(String direction)
-//    {
-//        Exit temp = this.exits.get(direction);
-//        if(temp != null)
-//        {
-//            return temp.takeExit(this.players.getFirst());
-//        }
-//        else
-//        {
-//            return false;
-//        }
-//    }
+    public boolean takeExit(String direction) {
+        Exit temp = this.exits.get(direction);
+        if (temp != null) {
+            return temp.takeExit(this.players.get(0));
+        } else {
+            return false;
+        }
+    }
 
     //Player management
     synchronized private void players_PerformAction(String action, Object[] params)
@@ -76,16 +69,15 @@ public class Room
         if(action.equals("addPlayer"))
         {
             Player temp = (Player)params[0];
-            //this.players.add(temp);
-            temp.setCurrentRoom(this);
+            this.players.add(temp);
+            temp.setCurrentRoomIndex(Core.theDungeon.findIndexOfRoom(this));
         }
         else if(action.equals("removePlayer"))
         {
             Player temp = (Player)params[0];
-//            if(this.players.remove(temp))
-//            {
-//                temp.setCurrentRoom(null);
-//            }
+            if (this.players.remove(temp)) {
+                temp.setCurrentRoomIndex(-1);
+            }
         }
     }
 
@@ -107,16 +99,15 @@ public class Room
         if(action.equals("addNPC"))
         {
             NPC temp = (NPC)params[0];
-            //this.npcs.add(temp);
-            temp.setCurrentRoom(this);
+            this.npcs.add(temp);
+            temp.setCurrentRoomIndex(Core.theDungeon.findIndexOfRoom(this));
         }
         else if(action.equals("removeNPC"))
         {
             NPC temp = (NPC)params[0];
-//            if(this.npcs.remove(temp))
-//            {
-//                temp.setCurrentRoom(null);
-//            }
+            if (this.npcs.remove(temp)) {
+                temp.setCurrentRoomIndex(-1);
+            }
         }
     }
 
