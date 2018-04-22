@@ -1,5 +1,7 @@
 package com.example.awesomefat.dungeonsanddatastructures;
 
+import com.google.firebase.database.Exclude;
+
 /**
  * Created by awesomefat on 3/29/18.
  */
@@ -16,18 +18,20 @@ public class Player {
         this.currentRoom_index = -1;
     }
 
-    public void display() {
-        System.out.println(this.name);
-    }
+//    public void display() {
+//        System.out.println(this.name);
+//    }
 
     public String getName() {
         return name;
     }
 
+    @Exclude
     public Room getCurrentRoom() {
         return Core.theDungeon.rooms.get(this.currentRoom_index);
     }
 
+    @Exclude
     public void setCurrentRoomIndex(int currentRoom_index) {
         this.currentRoom_index = currentRoom_index;
     }

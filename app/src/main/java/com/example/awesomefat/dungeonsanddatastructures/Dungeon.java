@@ -6,7 +6,7 @@ public class Dungeon
 {
     public Room startRoom;
     public String name;
-    public ArrayList<Exit> exits;
+    //    public ArrayList<Exit> exits;
     public ArrayList<Room> rooms;
     public Dungeon(){}
 
@@ -21,18 +21,18 @@ public class Dungeon
         this(name);
         this.startRoom = startRoom;
         this.rooms = new ArrayList<Room>();
-        this.exits = new ArrayList<Exit>();
+//        this.exits = new ArrayList<Exit>();
         this.rooms.add(startRoom);
     }
 
     public int findIndexOfRoom(Room r) {
         return this.rooms.indexOf(r);
     }
-
-    public void addExit(Exit e)
-    {
-        this.exits.add(e);
-    }
+//
+//    public void addExit(Exit e)
+//    {
+//        this.exits.add(e);
+//    }
 
     public void addRoom(Room r)
     {

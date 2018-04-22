@@ -16,14 +16,15 @@ public class Room
     public String description;
     public String name;
 
+
     public Room() { }
 
     public Room(String name, String description)
     {
         this.name = name;
         this.description = description;
-        this.players = new ArrayList<Player>();
-        this.npcs = new ArrayList<NPC>();
+        this.players = new ArrayList<>();
+        this.npcs = new ArrayList<>();
         this.exits = new HashMap<String, Exit>();
     }
 
@@ -108,6 +109,7 @@ public class Room
             if (this.npcs.remove(temp)) {
                 temp.setCurrentRoomIndex(-1);
             }
+
         }
     }
 

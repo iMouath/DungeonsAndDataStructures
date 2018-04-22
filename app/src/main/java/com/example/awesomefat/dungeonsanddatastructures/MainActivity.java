@@ -39,8 +39,10 @@ public class MainActivity extends AppCompatActivity
         this.westButton = this.findViewById(R.id.westButton);
 
         p = new Player("Mike");
+
+
         this.buildDungeon();
-        this.csDept.addPlayer(p);
+//        this.csDept.addPlayer(p);
         this.fillInterface(p.getCurrentRoom());
     }
 
@@ -57,8 +59,8 @@ public class MainActivity extends AppCompatActivity
         Room csHallway = new Room("CS Hallway", "The CS Hallway");
         this.csDept = new Dungeon("CS Department", csHallway);
         this.csDept.addRoom(s120);
-        Core.theDungeon = this.csDept;
 
+        Core.theDungeon = this.csDept;
         //Linking rooms through exits
         Exit s120_csHallway = new Exit(0,1);
 
@@ -66,7 +68,22 @@ public class MainActivity extends AppCompatActivity
         s120.addExit("north", s120_csHallway);
         csHallway.addExit("south", s120_csHallway);
 
-        csHallway.addPlayer(this.p);
+
+        Player player = new Player("Dynami");
+
+        this.csDept.addPlayer(p);
+        this.csDept.addPlayer(player);
+
+        for (int i = 0; i < 4; i++) {
+            NPC npc = new NPC("bot" + i);
+            if (i >= 2)
+                s120.addNPC(npc);
+            else
+                csHallway.addNPC(npc);
+        }
+
+
+//        csHallway.addPlayer(this.p);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dungeonRef = database.getReference("dungeons");
@@ -94,6 +111,7 @@ public class MainActivity extends AppCompatActivity
             temp.setText("     " + player.getName());
             this.alsoHereViewGroup.addView(temp);
         }
+
 
         TextView npcLabel = new TextView(this);
         npcLabel.setText("NPCs:");
