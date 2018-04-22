@@ -8,6 +8,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 public class MainActivity extends AppCompatActivity
 {
     private TextView nameTV;
@@ -41,16 +47,37 @@ public class MainActivity extends AppCompatActivity
         this.fillInterface(p.getCurrentRoom());
     }
 
+    public void onExitButtonClicked(View v)
+    {
+        Button b = (Button)v;
+        this.p.getCurrentRoom().takeExit(b.getText().toString().toLowerCase());
+        this.fillInterface(this.p.getCurrentRoom());
+    }
+
     private void buildDungeon()
     {
         Room s120 = new Room("S120", "S120 Classroom");
         Room csHallway = new Room("CS Hallway", "The CS Hallway");
         this.csDept = new Dungeon("CS Department", csHallway);
+        this.csDept.addRoom(s120);
+        Core.theDungeon = this.csDept;
 
         //Linking rooms through exits
-        Exit s120_csHallway = new Exit(s120, csHallway);
+        Exit s120_csHallway = new Exit(0,1);
+
+        //Exit s120_csHallway = new Exit(s120, csHallway);
         s120.addExit("north", s120_csHallway);
         csHallway.addExit("south", s120_csHallway);
+
+        csHallway.addPlayer(this.p);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference dungeonRef = database.getReference("dungeons");
+        DatabaseReference tempDungeon = dungeonRef.push();
+        tempDungeon.setValue(this.csDept);
+
+
+
     }
 
     private void fillInterface(Room r)

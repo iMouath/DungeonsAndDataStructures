@@ -6,28 +6,33 @@ package com.example.awesomefat.dungeonsanddatastructures;
 
 public class Exit
 {
-    private Room r1;
-    private Room r2;
+    public int r1_index;
+    public int r2_index;
 
-    public Exit(Room r1, Room r2)
+    public Exit(){}
+
+    public Exit(int r1_index, int r2_index)
     {
-        this.r1 = r1;
-        this.r2 = r2;
+        this.r1_index = r1_index;
+        this.r2_index = r2_index;
     }
 
     public boolean takeExit(Player p)
     {
         //make the player move to the room they are NOT currently in.
-        if(p.getCurrentRoom() == this.r1)
+        Room r1 = Core.theDungeon.rooms.get(this.r1_index);
+        Room r2 = Core.theDungeon.rooms.get(this.r2_index);
+
+        if(p.getCurrentRoom() == r1)
         {
-            this.r1.removePlayer(p);
-            this.r2.addPlayer(p);
+            r1.removePlayer(p);
+            r2.addPlayer(p);
             return true;
         }
-        else if(p.getCurrentRoom() == this.r2)
+        else if(p.getCurrentRoom() == r2)
         {
-            this.r2.removePlayer(p);
-            this.r1.addPlayer(p);
+            r2.removePlayer(p);
+            r1.addPlayer(p);
             return true;
         }
         return false;

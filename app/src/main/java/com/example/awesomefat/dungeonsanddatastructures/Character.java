@@ -6,13 +6,15 @@ package com.example.awesomefat.dungeonsanddatastructures;
 
 public abstract class Character
 {
-    protected String name;
-    protected Room currentRoom;
+    public String name;
+    public int currentRoom_index;
+
+    public Character(){}
 
     public Character(String name)
     {
         this.name = name;
-        this.currentRoom = null;
+        this.currentRoom_index = -1;
     }
 
     public void display()
@@ -24,11 +26,13 @@ public abstract class Character
         return name;
     }
 
-    public Room getCurrentRoom() {
-        return currentRoom;
+    public Room getCurrentRoom()
+    {
+        return Core.theDungeon.rooms.get(this.currentRoom_index);
     }
 
-    public void setCurrentRoom(Room currentRoom) {
-        this.currentRoom = currentRoom;
+    public void setCurrentRoomIndex(int currentRoom_index)
+    {
+        this.currentRoom_index = currentRoom_index;
     }
 }

@@ -1,9 +1,8 @@
 package com.example.awesomefat.dungeonsanddatastructures;
 
-import java.util.Dictionary;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by awesomefat on 3/29/18.
@@ -11,30 +10,33 @@ import java.util.LinkedList;
 
 public class Room
 {
-    private LinkedList<Player> players;
-    private LinkedList<NPC> npcs;
-    private Hashtable<String, Exit> exits;
-    private String description;
-    private String name;
+    public ArrayList<Player> players;
+    public ArrayList<NPC> npcs;
+    public Map<String, Exit> exits;
+    public String description;
+    public String name;
+
+    public Room() { }
 
     public Room(String name, String description)
     {
         this.name = name;
         this.description = description;
-        this.players = new LinkedList<Player>();
-        this.npcs = new LinkedList<NPC>();
-        this.exits = new Hashtable<String, Exit>();
+        this.players = new ArrayList<Player>();
+        this.npcs = new ArrayList<NPC>();
+        this.exits = new HashMap<String, Exit>();
     }
 
-    public LinkedList<Player> getPlayers() {
+
+    public ArrayList<Player> getPlayers() {
         return players;
     }
 
-    public LinkedList<NPC> getNpcs() {
+    public ArrayList<NPC> getNpcs() {
         return npcs;
     }
 
-    public Hashtable<String, Exit> getExits() {
+    public Map<String, Exit> getExits() {
         return exits;
     }
 
@@ -44,39 +46,6 @@ public class Room
 
     public String getName() {
         return name;
-    }
-
-    public void display()
-    {
-        System.out.println("Room Name: " + this.name);
-        System.out.println("Description\n" + this.description);
-        System.out.println("Also Here:");
-        System.out.println("Players");
-        for(Player p : this.players)
-        {
-            p.display();
-        }
-
-        System.out.println("NPCs");
-        for(NPC n : this.npcs)
-        {
-            n.display();
-        }
-
-        System.out.println("Obvious Exits:");
-        /*
-        Enumeration<String> keys = this.exits.keys();
-        while(keys.hasMoreElements())
-        {
-            System.out.println(keys.nextElement());
-        }
-        */
-
-        System.out.println("Obvious Exits:");
-        for(String keyName : this.exits.keySet())
-        {
-            System.out.println(keyName);
-        }
     }
 
     //Exit Management
@@ -90,7 +59,7 @@ public class Room
         Exit temp = this.exits.get(direction);
         if(temp != null)
         {
-            return temp.takeExit(this.players.getFirst());
+            return temp.takeExit(this.players.get(0));
         }
         else
         {
@@ -105,14 +74,14 @@ public class Room
         {
             Player temp = (Player)params[0];
             this.players.add(temp);
-            temp.setCurrentRoom(this);
+            temp.setCurrentRoomIndex(Core.theDungeon.findIndexOfRoom(this));
         }
         else if(action.equals("removePlayer"))
         {
             Player temp = (Player)params[0];
             if(this.players.remove(temp))
             {
-                temp.setCurrentRoom(null);
+                temp.setCurrentRoomIndex(-1);
             }
         }
     }
@@ -136,14 +105,14 @@ public class Room
         {
             NPC temp = (NPC)params[0];
             this.npcs.add(temp);
-            temp.setCurrentRoom(this);
+            temp.setCurrentRoomIndex(Core.theDungeon.findIndexOfRoom(this));
         }
         else if(action.equals("removeNPC"))
         {
             NPC temp = (NPC)params[0];
             if(this.npcs.remove(temp))
             {
-                temp.setCurrentRoom(null);
+                temp.setCurrentRoomIndex(-1);
             }
         }
     }
