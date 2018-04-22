@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity
     public void onExitButtonClicked(View v)
     {
         Button b = (Button)v;
-        this.p.getCurrentRoom().takeExit(b.getText().toString().toLowerCase());
+        //this.p.getCurrentRoom().takeExit(b.getText().toString().toLowerCase());
         this.fillInterface(this.p.getCurrentRoom());
     }
 
@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity
         Room csHallway = new Room("CS Hallway", "The CS Hallway");
         this.csDept = new Dungeon("CS Department", csHallway);
         this.csDept.addRoom(s120);
-        Core.theDungeon = this.csDept;
 
         //Linking rooms through exits
         Exit s120_csHallway = new Exit(0,1);
@@ -69,15 +68,11 @@ public class MainActivity extends AppCompatActivity
         s120.addExit("north", s120_csHallway);
         csHallway.addExit("south", s120_csHallway);
 
-        csHallway.addPlayer(this.p);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dungeonRef = database.getReference("dungeons");
         DatabaseReference tempDungeon = dungeonRef.push();
         tempDungeon.setValue(this.csDept);
-
-
-
     }
 
     private void fillInterface(Room r)
@@ -93,23 +88,23 @@ public class MainActivity extends AppCompatActivity
         playersLabel.setTypeface(null, Typeface.BOLD);
         this.alsoHereViewGroup.addView(playersLabel);
         TextView temp;
-        for(Player player : r.getPlayers())
-        {
-            temp = new TextView(this);
-            temp.setText("     " + player.getName());
-            this.alsoHereViewGroup.addView(temp);
-        }
+//        for(Player player : r.getPlayers())
+//        {
+//            temp = new TextView(this);
+//            temp.setText("     " + player.getName());
+//            this.alsoHereViewGroup.addView(temp);
+//        }
 
         TextView npcLabel = new TextView(this);
         npcLabel.setText("NPCs:");
         npcLabel.setTypeface(null, Typeface.BOLD);
         this.alsoHereViewGroup.addView(npcLabel);
-        for(NPC npc : r.getNpcs())
-        {
-            temp = new TextView(this);
-            temp.setText("     " + npc.getName());
-            this.alsoHereViewGroup.addView(temp);
-        }
+//        for(NPC npc : r.getNpcs())
+//        {
+//            temp = new TextView(this);
+//            temp.setText("     " + npc.getName());
+//            this.alsoHereViewGroup.addView(temp);
+//        }
 
         this.northButton.setVisibility(View.INVISIBLE);
         this.southButton.setVisibility(View.INVISIBLE);
@@ -117,45 +112,45 @@ public class MainActivity extends AppCompatActivity
         this.westButton.setVisibility(View.INVISIBLE);
 
         //hide the appropriate buttons:
-        if(r.getExits().containsKey("north"))
-        {
-            this.northButton.setVisibility(View.VISIBLE);
-        }
-        if(r.getExits().containsKey("south"))
-        {
-            this.southButton.setVisibility(View.VISIBLE);
-        }
-        if(r.getExits().containsKey("east"))
-        {
-            this.eastButton.setVisibility(View.VISIBLE);
-        }
-        if(r.getExits().containsKey("west"))
-        {
-            this.westButton.setVisibility(View.VISIBLE);
-        }
+//        if(r.getExits().containsKey("north"))
+//        {
+//            this.northButton.setVisibility(View.VISIBLE);
+//        }
+//        if(r.getExits().containsKey("south"))
+//        {
+//            this.southButton.setVisibility(View.VISIBLE);
+//        }
+//        if(r.getExits().containsKey("east"))
+//        {
+//            this.eastButton.setVisibility(View.VISIBLE);
+//        }
+//        if(r.getExits().containsKey("west"))
+//        {
+//            this.westButton.setVisibility(View.VISIBLE);
+//        }
     }
 
     public void onExitButtonClick(View view){
-        if(view == northButton){
-            //North Exit
-            p.currentRoom.takeExit("north");
-            fillInterface(p.currentRoom);
-        }
-        if(view == southButton){
-            //South Exit
-            p.currentRoom.takeExit("south");
-            fillInterface(p.currentRoom);
-        }
-        if(view == eastButton){
-            //East Exit
-            p.currentRoom.takeExit("east");
-            fillInterface(p.currentRoom);
-        }
-        if(view == westButton){
-            //West Exit
-            p.currentRoom.takeExit("west");
-            fillInterface(p.currentRoom);
-        }
+//        if(view == northButton){
+//            //North Exit
+//            p.currentRoom.takeExit("north");
+//            fillInterface(p.currentRoom);
+//        }
+//        if(view == southButton){
+//            //South Exit
+//            p.currentRoom.takeExit("south");
+//            fillInterface(p.currentRoom);
+//        }
+//        if(view == eastButton){
+//            //East Exit
+//            p.currentRoom.takeExit("east");
+//            fillInterface(p.currentRoom);
+//        }
+//        if(view == westButton){
+//            //West Exit
+//            p.currentRoom.takeExit("west");
+//            fillInterface(p.currentRoom);
+//        }
 
     }
 }

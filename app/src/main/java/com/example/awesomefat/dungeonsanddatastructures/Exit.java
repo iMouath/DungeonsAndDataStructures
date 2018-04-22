@@ -20,21 +20,18 @@ public class Exit
     public boolean takeExit(Player p)
     {
         //make the player move to the room they are NOT currently in.
-        Room r1 = Core.theDungeon.rooms.get(this.r1_index);
-        Room r2 = Core.theDungeon.rooms.get(this.r2_index);
-
-        if(p.getCurrentRoom() == r1)
-        {
-            r1.removePlayer(p);
-            r2.addPlayer(p);
-            return true;
-        }
-        else if(p.getCurrentRoom() == r2)
-        {
-            r2.removePlayer(p);
-            r1.addPlayer(p);
-            return true;
-        }
+//        if(p.getCurrentRoom() == this.r1)
+//        {
+//            this.r1.removePlayer(p);
+//            this.r2.addPlayer(p);
+//            return true;
+//        }
+//        else if(p.getCurrentRoom() == this.r2)
+//        {
+//            this.r2.removePlayer(p);
+//            this.r1.addPlayer(p);
+//            return true;
+//        }
         return false;
     }
 }

@@ -26,11 +26,6 @@ public class Dungeon
         this.rooms.add(startRoom);
     }
 
-    public int findIndexOfRoom(Room r)
-    {
-        return this.rooms.indexOf(r);
-    }
-
     public void addExit(Exit e)
     {
         this.exits.add(e);
