@@ -26,12 +26,15 @@ public class MainActivity extends AppCompatActivity
 
     private Player p;
     private Dungeon csDept;
+    private MainActivity mainActivityInstancePointer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        this.mainActivityInstancePointer = this;
 
         this.nameTV = (TextView)this.findViewById(R.id.nameTV);
         this.descriptionTV = (TextView)this.findViewById(R.id.descriptionTV);
@@ -43,8 +46,8 @@ public class MainActivity extends AppCompatActivity
 
         p = new Player("Mike");
         this.buildDungeon();
-        this.csDept.addPlayer(p);
-        this.fillInterface(p.getCurrentRoom());
+        //this.csDept.addPlayer(p);
+        //this.fillInterface(p.getCurrentRoom());
     }
 
     public void onExitButtonClicked(View v)
@@ -56,6 +59,7 @@ public class MainActivity extends AppCompatActivity
 
     private void buildDungeon()
     {
+        /*
         Room s120 = new Room("S120", "S120 Classroom");
         Room csHallway = new Room("CS Hallway", "The CS Hallway");
         this.csDept = new Dungeon("CS Department", csHallway);
@@ -69,15 +73,35 @@ public class MainActivity extends AppCompatActivity
         s120.addExit("north", s120_csHallway);
         csHallway.addExit("south", s120_csHallway);
 
-        csHallway.addPlayer(this.p);
+        NPC monster = new NPC("Locklair");
+        s120.addNPC(monster);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dungeonRef = database.getReference("dungeons");
         DatabaseReference tempDungeon = dungeonRef.push();
         tempDungeon.setValue(this.csDept);
 
+        */
 
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference dungeonRef = database.getReference("dungeons");
+        dungeonRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                DataSnapshot theDungeon = dataSnapshot.getChildren().iterator().next();
+                System.out.println(dataSnapshot.toString());
+                mainActivityInstancePointer.csDept = theDungeon.getValue(Dungeon.class);
+                mainActivityInstancePointer.csDept.addPlayer(p);
+                mainActivityInstancePointer.fillInterface(p.getCurrentRoom());
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError)
+            {
+
+            }
+        });
     }
 
     private void fillInterface(Room r)

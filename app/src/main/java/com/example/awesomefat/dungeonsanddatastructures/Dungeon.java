@@ -15,6 +15,8 @@ public class Dungeon
     {
         this.name = name;
         this.startRoom = null;
+        this.exits = new ArrayList<Exit>();
+        this.rooms = new ArrayList<Room>();
     }
 
     public Dungeon(String name, Room startRoom)

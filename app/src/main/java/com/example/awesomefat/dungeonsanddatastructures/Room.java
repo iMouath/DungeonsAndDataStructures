@@ -1,5 +1,7 @@
 package com.example.awesomefat.dungeonsanddatastructures;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +12,9 @@ import java.util.Map;
 
 public class Room
 {
+    @Exclude
     public ArrayList<Player> players;
+
     public ArrayList<NPC> npcs;
     public Map<String, Exit> exits;
     public String description;
@@ -26,6 +30,7 @@ public class Room
         this.npcs = new ArrayList<NPC>();
         this.exits = new HashMap<String, Exit>();
     }
+
 
 
     public ArrayList<Player> getPlayers() {
@@ -53,6 +58,7 @@ public class Room
     {
         this.exits.put(direction, e);
     }
+
 
     public boolean takeExit(String direction)
     {
@@ -86,11 +92,13 @@ public class Room
         }
     }
 
+
     public void addPlayer(Player p)
     {
         Object[] params = {p};
         this.players_PerformAction("addPlayer", params);
     }
+
 
     public void removePlayer(Player p)
     {

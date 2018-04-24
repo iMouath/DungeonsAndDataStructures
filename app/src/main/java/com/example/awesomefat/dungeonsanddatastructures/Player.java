@@ -1,5 +1,7 @@
 package com.example.awesomefat.dungeonsanddatastructures;
 
+import com.google.firebase.database.Exclude;
+
 /**
  * Created by awesomefat on 3/29/18.
  */
@@ -26,6 +28,8 @@ public class Player
         return name;
     }
 
+
+    @Exclude
     public Room getCurrentRoom()
     {
         return Core.theDungeon.rooms.get(this.currentRoom_index);
