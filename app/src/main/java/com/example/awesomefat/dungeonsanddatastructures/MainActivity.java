@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity
 
     private void buildDungeon()
     {
-        /*
+/*
         Room s120 = new Room("S120", "S120 Classroom");
         Room csHallway = new Room("CS Hallway", "The CS Hallway");
         this.csDept = new Dungeon("CS Department", csHallway);
@@ -80,8 +80,8 @@ public class MainActivity extends AppCompatActivity
         DatabaseReference dungeonRef = database.getReference("dungeons");
         DatabaseReference tempDungeon = dungeonRef.push();
         tempDungeon.setValue(this.csDept);
+*/
 
-        */
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dungeonRef = database.getReference("dungeons");
@@ -90,8 +90,8 @@ public class MainActivity extends AppCompatActivity
             public void onDataChange(DataSnapshot dataSnapshot)
             {
                 DataSnapshot theDungeon = dataSnapshot.getChildren().iterator().next();
-                System.out.println(dataSnapshot.toString());
                 mainActivityInstancePointer.csDept = theDungeon.getValue(Dungeon.class);
+                Core.theDungeon = mainActivityInstancePointer.csDept;
                 mainActivityInstancePointer.csDept.addPlayer(p);
                 mainActivityInstancePointer.fillInterface(p.getCurrentRoom());
             }
@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
+
     }
 
     private void fillInterface(Room r)

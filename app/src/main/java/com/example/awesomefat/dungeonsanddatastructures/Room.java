@@ -20,15 +20,18 @@ public class Room
     public String description;
     public String name;
 
-    public Room() { }
-
-    public Room(String name, String description)
+    public Room()
     {
-        this.name = name;
-        this.description = description;
         this.players = new ArrayList<Player>();
         this.npcs = new ArrayList<NPC>();
         this.exits = new HashMap<String, Exit>();
+    }
+
+    public Room(String name, String description)
+    {
+        this();
+        this.name = name;
+        this.description = description;
     }
 
 
