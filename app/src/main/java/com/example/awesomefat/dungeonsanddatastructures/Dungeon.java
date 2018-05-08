@@ -49,4 +49,12 @@ public class Dungeon
     {
         this.rooms.get(this.startRoomIndex).addPlayer(p);
     }
+
+    public void startNPCThreads()
+    {
+        for(Room r : this.rooms)
+        {
+            r.startNPCThreads();
+        }
+    }
 }

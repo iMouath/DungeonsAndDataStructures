@@ -139,4 +139,12 @@ public class Room
         Object[] params = {n};
         this.npcs_PerformAction("removeNPC", params);
     }
+
+    public void startNPCThreads()
+    {
+        for(NPC npc : this.npcs)
+        {
+            npc.start();
+        }
+    }
 }

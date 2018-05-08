@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity
                 Core.theDungeon = mainActivityInstancePointer.csDept;
                 mainActivityInstancePointer.csDept.addPlayer(p);
                 mainActivityInstancePointer.fillInterface(p.getCurrentRoom());
+                Core.theDungeon.startNPCThreads();
             }
 
             @Override
