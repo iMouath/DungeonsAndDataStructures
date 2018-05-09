@@ -34,7 +34,6 @@ public class NPC extends Thread {
                 sleep(r.nextInt(10000) + 1000);
                 //System.out.printf()
                 for (String direction : this.getCurrentRoom().exits.keySet()) {
-                    System.out.println(direction);
                     this.getCurrentRoom().takeExit(direction);
                 }
 //                System.out.println(String.format("**** NPC %s says: %s", this.getName(), "Woot"));
