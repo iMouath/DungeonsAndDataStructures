@@ -1,38 +1,44 @@
 package com.example.awesomefat.dungeonsanddatastructures;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Dungeon
 {
-    public Room startRoom;
+    public int startRoomIndex;
     public String name;
-    //    public ArrayList<Exit> exits;
+    public ArrayList<Exit> exits;
     public ArrayList<Room> rooms;
-    public Dungeon(){}
+
+    public Dungeon()
+    {
+        this.exits = new ArrayList<Exit>();
+        this.rooms = new ArrayList<Room>();
+    }
 
     public Dungeon(String name)
     {
+        this();
         this.name = name;
-        this.startRoom = null;
+        this.startRoomIndex = -1;
     }
 
     public Dungeon(String name, Room startRoom)
     {
         this(name);
-        this.startRoom = startRoom;
-        this.rooms = new ArrayList<Room>();
-//        this.exits = new ArrayList<Exit>();
+        this.startRoomIndex = 0;
         this.rooms.add(startRoom);
     }
 
-    public int findIndexOfRoom(Room r) {
+    public int findIndexOfRoom(Room r)
+    {
         return this.rooms.indexOf(r);
     }
-//
-//    public void addExit(Exit e)
-//    {
-//        this.exits.add(e);
-//    }
+
+    public void addExit(Exit e)
+    {
+        this.exits.add(e);
+    }
 
     public void addRoom(Room r)
     {
@@ -41,6 +47,14 @@ public class Dungeon
 
     public void addPlayer(Player p)
     {
-        this.startRoom.addPlayer(p);
+        this.rooms.get(this.startRoomIndex).addPlayer(p);
+    }
+
+    public void startNPCThreads()
+    {
+        for(Room r : this.rooms)
+        {
+            r.startNPCThreads();
+        }
     }
 }

@@ -1,15 +1,18 @@
 package com.example.awesomefat.dungeonsanddatastructures;
 
 import android.graphics.Typeface;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -23,6 +26,7 @@ public class MainActivity extends AppCompatActivity
 
     private Player p;
     private Dungeon csDept;
+    private MainActivity mainActivityInstancePointer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -30,20 +34,20 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.nameTV = this.findViewById(R.id.nameTV);
-        this.descriptionTV = this.findViewById(R.id.descriptionTV);
-        this.alsoHereViewGroup = this.findViewById(R.id.alsoHereViewGroup);
-        this.northButton = this.findViewById(R.id.northButton);
-        this.southButton = this.findViewById(R.id.southButton);
-        this.eastButton = this.findViewById(R.id.eastButton);
-        this.westButton = this.findViewById(R.id.westButton);
+        this.mainActivityInstancePointer = this;
+
+        this.nameTV = (TextView)this.findViewById(R.id.nameTV);
+        this.descriptionTV = (TextView)this.findViewById(R.id.descriptionTV);
+        this.alsoHereViewGroup = (ViewGroup)this.findViewById(R.id.alsoHereViewGroup);
+        this.northButton = (Button)this.findViewById(R.id.northButton);
+        this.southButton = (Button)this.findViewById(R.id.southButton);
+        this.eastButton = (Button)this.findViewById(R.id.eastButton);
+        this.westButton = (Button)this.findViewById(R.id.westButton);
 
         p = new Player("Mike");
-
-
         this.buildDungeon();
-//        this.csDept.addPlayer(p);
-        this.fillInterface(p.getCurrentRoom());
+        //this.csDept.addPlayer(p);
+        //this.fillInterface(p.getCurrentRoom());
     }
 
     public void onExitButtonClicked(View v)
@@ -55,12 +59,13 @@ public class MainActivity extends AppCompatActivity
 
     private void buildDungeon()
     {
+/*
         Room s120 = new Room("S120", "S120 Classroom");
         Room csHallway = new Room("CS Hallway", "The CS Hallway");
         this.csDept = new Dungeon("CS Department", csHallway);
         this.csDept.addRoom(s120);
-
         Core.theDungeon = this.csDept;
+
         //Linking rooms through exits
         Exit s120_csHallway = new Exit(0,1);
 
@@ -68,28 +73,36 @@ public class MainActivity extends AppCompatActivity
         s120.addExit("north", s120_csHallway);
         csHallway.addExit("south", s120_csHallway);
 
-
-        Player player = new Player("Dynami");
-
-        this.csDept.addPlayer(p);
-        this.csDept.addPlayer(player);
-
-        for (int i = 0; i < 4; i++) {
-            NPC npc = new NPC("bot" + i);
-            if (i >= 2)
-                s120.addNPC(npc);
-            else
-                csHallway.addNPC(npc);
-        }
-
-
-//        csHallway.addPlayer(this.p);
+        NPC monster = new NPC("Locklair");
+        s120.addNPC(monster);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dungeonRef = database.getReference("dungeons");
         DatabaseReference tempDungeon = dungeonRef.push();
         tempDungeon.setValue(this.csDept);
+*/
 
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference dungeonRef = database.getReference("dungeons");
+        dungeonRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                DataSnapshot theDungeon = dataSnapshot.getChildren().iterator().next();
+                mainActivityInstancePointer.csDept = theDungeon.getValue(Dungeon.class);
+                Core.theDungeon = mainActivityInstancePointer.csDept;
+                mainActivityInstancePointer.csDept.addPlayer(p);
+                mainActivityInstancePointer.fillInterface(p.getCurrentRoom());
+                Core.theDungeon.startNPCThreads();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError)
+            {
+
+            }
+        });
 
     }
 
@@ -106,18 +119,19 @@ public class MainActivity extends AppCompatActivity
         playersLabel.setTypeface(null, Typeface.BOLD);
         this.alsoHereViewGroup.addView(playersLabel);
         TextView temp;
-        for (Player player : r.getPlayers()) {
+        for(Player player : r.getPlayers())
+        {
             temp = new TextView(this);
             temp.setText("     " + player.getName());
             this.alsoHereViewGroup.addView(temp);
         }
 
-
         TextView npcLabel = new TextView(this);
         npcLabel.setText("NPCs:");
         npcLabel.setTypeface(null, Typeface.BOLD);
         this.alsoHereViewGroup.addView(npcLabel);
-        for (NPC npc : r.getNpcs()) {
+        for(NPC npc : r.getNpcs())
+        {
             temp = new TextView(this);
             temp.setText("     " + npc.getName());
             this.alsoHereViewGroup.addView(temp);
@@ -129,41 +143,21 @@ public class MainActivity extends AppCompatActivity
         this.westButton.setVisibility(View.INVISIBLE);
 
         //hide the appropriate buttons:
-        if (r.getExits().containsKey("north")) {
+        if(r.getExits().containsKey("north"))
+        {
             this.northButton.setVisibility(View.VISIBLE);
         }
-        if (r.getExits().containsKey("south")) {
+        if(r.getExits().containsKey("south"))
+        {
             this.southButton.setVisibility(View.VISIBLE);
         }
-        if (r.getExits().containsKey("east")) {
+        if(r.getExits().containsKey("east"))
+        {
             this.eastButton.setVisibility(View.VISIBLE);
         }
-        if (r.getExits().containsKey("west")) {
+        if(r.getExits().containsKey("west"))
+        {
             this.westButton.setVisibility(View.VISIBLE);
         }
-    }
-
-    public void onExitButtonClick(View view){
-//        if(view == northButton){
-//            //North Exit
-//            p.currentRoom.takeExit("north");
-//            fillInterface(p.currentRoom);
-//        }
-//        if(view == southButton){
-//            //South Exit
-//            p.currentRoom.takeExit("south");
-//            fillInterface(p.currentRoom);
-//        }
-//        if(view == eastButton){
-//            //East Exit
-//            p.currentRoom.takeExit("east");
-//            fillInterface(p.currentRoom);
-//        }
-//        if(view == westButton){
-//            //West Exit
-//            p.currentRoom.takeExit("west");
-//            fillInterface(p.currentRoom);
-//        }
-
     }
 }
