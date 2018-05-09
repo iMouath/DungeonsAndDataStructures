@@ -20,8 +20,7 @@ public class Room
     public String description;
     public String name;
 
-    public Room()
-    {
+    public Room() {
         this.players = new ArrayList<Player>();
         this.npcs = new ArrayList<NPC>();
         this.exits = new HashMap<String, Exit>();
@@ -63,15 +62,11 @@ public class Room
     }
 
 
-    public boolean takeExit(String direction)
-    {
+    public boolean takeExit(String direction) {
         Exit temp = this.exits.get(direction);
-        if(temp != null)
-        {
+        if (temp != null) {
             return temp.takeExit(this.players.get(0));
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -88,8 +83,7 @@ public class Room
         else if(action.equals("removePlayer"))
         {
             Player temp = (Player)params[0];
-            if(this.players.remove(temp))
-            {
+            if (this.players.remove(temp)) {
                 temp.setCurrentRoomIndex(-1);
             }
         }
@@ -121,8 +115,7 @@ public class Room
         else if(action.equals("removeNPC"))
         {
             NPC temp = (NPC)params[0];
-            if(this.npcs.remove(temp))
-            {
+            if (this.npcs.remove(temp)) {
                 temp.setCurrentRoomIndex(-1);
             }
         }
@@ -140,10 +133,8 @@ public class Room
         this.npcs_PerformAction("removeNPC", params);
     }
 
-    public void startNPCThreads()
-    {
-        for(NPC npc : this.npcs)
-        {
+    public void startNPCThreads() {
+        for (NPC npc : this.npcs) {
             npc.start();
         }
     }

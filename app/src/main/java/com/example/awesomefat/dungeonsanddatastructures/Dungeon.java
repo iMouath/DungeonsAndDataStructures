@@ -1,7 +1,6 @@
 package com.example.awesomefat.dungeonsanddatastructures;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class Dungeon
 {
@@ -10,8 +9,7 @@ public class Dungeon
     public ArrayList<Exit> exits;
     public ArrayList<Room> rooms;
 
-    public Dungeon()
-    {
+    public Dungeon() {
         this.exits = new ArrayList<Exit>();
         this.rooms = new ArrayList<Room>();
     }
@@ -30,13 +28,11 @@ public class Dungeon
         this.rooms.add(startRoom);
     }
 
-    public int findIndexOfRoom(Room r)
-    {
+    public int findIndexOfRoom(Room r) {
         return this.rooms.indexOf(r);
     }
 
-    public void addExit(Exit e)
-    {
+    public void addExit(Exit e) {
         this.exits.add(e);
     }
 
@@ -50,10 +46,8 @@ public class Dungeon
         this.rooms.get(this.startRoomIndex).addPlayer(p);
     }
 
-    public void startNPCThreads()
-    {
-        for(Room r : this.rooms)
-        {
+    public void startNPCThreads() {
+        for (Room r : this.rooms) {
             r.startNPCThreads();
         }
     }

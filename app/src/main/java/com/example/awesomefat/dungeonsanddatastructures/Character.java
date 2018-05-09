@@ -26,13 +26,11 @@ public abstract class Character
         return name;
     }
 
-    public Room getCurrentRoom()
-    {
+    public Room getCurrentRoom() {
         return Core.theDungeon.rooms.get(this.currentRoom_index);
     }
 
-    public void setCurrentRoomIndex(int currentRoom_index)
-    {
+    public void setCurrentRoomIndex(int currentRoom_index) {
         this.currentRoom_index = currentRoom_index;
     }
 }

@@ -1,18 +1,14 @@
 package com.example.awesomefat.dungeonsanddatastructures;
 
-import android.util.Log;
-
 import com.google.firebase.database.Exclude;
 
-import java.io.Console;
 import java.util.Random;
 
 /**
  * Created by awesomefat on 3/29/18.
  */
 
-public class NPC extends Thread
-{
+public class NPC extends Thread {
     //public String name;
     public int currentRoom_index;
 
@@ -30,25 +26,25 @@ public class NPC extends Thread
     so they immediately see an NPC walk in.  You should have NPCs
     randomly select a valid exit from the room they are currently in
      */
-    public void run()
-    {
+    public void run() {
         Random r = new Random();
 
-        while(true)
-        {
-            try
-            {
-                this.sleep(r.nextInt(10000) + 1000);
+        while (true) {
+            try {
+                sleep(r.nextInt(10000) + 1000);
                 //System.out.printf()
-                System.out.println(String.format("**** NPC %s says: %s", this.getName(), "Woot"));
+                for (String direction : this.getCurrentRoom().exits.keySet()) {
+                    System.out.println(direction);
+                    this.getCurrentRoom().takeExit(direction);
+                }
+//                System.out.println(String.format("**** NPC %s says: %s", this.getName(), "Woot"));
                 //Log.v("***Says", "Woot");
+            } catch (Exception e) {
             }
-            catch(Exception e){}
         }
     }
 
-    public void display()
-    {
+    public void display() {
         //System.out.println(this.name);
     }
 
@@ -57,13 +53,11 @@ public class NPC extends Thread
     }
 
     @Exclude
-    public Room getCurrentRoom()
-    {
+    public Room getCurrentRoom() {
         return Core.theDungeon.rooms.get(this.currentRoom_index);
     }
 
-    public void setCurrentRoomIndex(int currentRoom_index)
-    {
+    public void setCurrentRoomIndex(int currentRoom_index) {
         this.currentRoom_index = currentRoom_index;
     }
 }
